@@ -7,8 +7,8 @@ import bgu.spl.net.srv.bidi.Message;
  * Created by Yahel on 23/12/2018.
  */
 public class Login extends Message {
-    public Login(String[] msg){
-        super(msg);
+    public Login(){
+        super();
     }
     public void process(int connectionId, Connections<Message> connections){
 

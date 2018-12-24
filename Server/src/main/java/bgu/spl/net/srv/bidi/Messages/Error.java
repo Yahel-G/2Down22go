@@ -8,8 +8,8 @@ import bgu.spl.net.srv.bidi.Message;
  */
 public class Error extends Message {
 
-    public Error(String[] msg){
-        super(msg);
+    public Error(){
+        super();
     }
     public void process(int connectionId, Connections<Message> connections){
 
