@@ -35,10 +35,7 @@ public class MessageFactory {
             return new Ack();
         }else if (type == OpcodeType.ERROR){
             return new Error();
-        }
-
-
-
+        }else return null; // some error
     }
 }
 
