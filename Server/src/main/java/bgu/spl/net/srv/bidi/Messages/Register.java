@@ -2,7 +2,6 @@ package bgu.spl.net.srv.bidi.Messages;
 
 import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.bidi.Message;
-import jdk.internal.org.objectweb.asm.ByteVector;
 
 import java.util.Vector;
 
@@ -41,5 +40,8 @@ public class Register extends Message {
 
     }
     public void process(int connectionId, Connections<Message> connections){ // todo: probably delete this
+    }
+    public boolean isDoneDecoding(){
+        return doneDecoding;
     }
 }

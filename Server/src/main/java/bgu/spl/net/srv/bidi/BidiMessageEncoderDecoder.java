@@ -7,10 +7,10 @@ import java.nio.ByteBuffer;
 /**
  * Created by Yahel on 23/12/2018.
  */
-public class BidiMessageEncoderDecoder<T> implements MessageEncoderDecoder<Message> {
+public class BidiMessageEncoderDecoder<Message> implements MessageEncoderDecoder<Message> {
 
-    private Message message = null;
-    private Message result = null;
+    private bgu.spl.net.srv.bidi.Message message = null;
+    private bgu.spl.net.srv.bidi.Message result = null;
     private final ByteBuffer opCode = ByteBuffer.allocate(2);
 
     // --------------------- DECODER --------------------- //

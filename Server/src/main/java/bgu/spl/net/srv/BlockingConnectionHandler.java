@@ -2,6 +2,7 @@ package bgu.spl.net.srv;
 
 import bgu.spl.net.api.bidi.BidiMessagingProtocol;
 import bgu.spl.net.srv.bidi.BidiMessageEncoderDecoder;
+import bgu.spl.net.srv.bidi.Messages.Register;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -35,6 +36,10 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
                 T nextMessage =  encdec.decodeNextByte((byte) read);
                 if (nextMessage.isDoneDecoding()) {
                     protocol.process(nextMessage);
+
+        T nasdasd = new Register();
+
+
 /*                    if (response != null) {
                         out.write(encdec.encode(response));
                         out.flush();
