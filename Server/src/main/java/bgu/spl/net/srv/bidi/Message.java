@@ -2,10 +2,13 @@ package bgu.spl.net.srv.bidi;
 
 import bgu.spl.net.api.bidi.Connections;
 
+import java.util.Vector;
+
 /**
  * Created by Yahel on 23/12/2018.
  */
 public abstract class Message {
+    protected boolean doneDecoding = false;
     private String[] theMsg;
 
     public Message(){
@@ -16,25 +19,22 @@ public abstract class Message {
         return theMsg;
     }
 
-    public abstract void process(int connectionId, Connections<Message> connections);
+    public abstract void process(int connectionId, Connections<Message> connections); // todo: probably delete this
 
-    public abstract void decodeByte(byte nextByte);
+    public abstract void decodeByte(Byte nextByte);
+    public boolean isDoneDecoding(){
+        return doneDecoding;
+    }
 
 
-    protected String bytesToString() {
-/*        byte[] bytes = new byte[_byteVector.size()];
+    // couldn't find a function that does this. there might be a better way
+    protected byte[] toByteArray(Vector<Byte> vect){
+        byte[] ret = new byte[vect.size()];
         int i = 0;
-        for (Byte currByte : _byteVector) {
-            bytes[i] = currByte.byteValue();
+        for (Byte byt: vect){
+            ret[i] = byt;
             i++;
         }
-        _byteVector.clear();
-        String str = null;
-        try {
-            str = new String(bytes, 0, bytes.length , ENCODING);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return str;*/
+        return ret;
     }
 }

@@ -38,8 +38,7 @@ public class BidiMessageEncoderDecoder<T> implements MessageEncoderDecoder<Messa
 
 
 
-    // --------------------- ENCODE SECTION --------------------- //
-
+    // encode function should be called by the protocol in the process() function right before calling send() function
     @Override
     public byte[] encode(Message message) {
 
