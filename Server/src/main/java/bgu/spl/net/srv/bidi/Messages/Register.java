@@ -12,7 +12,6 @@ public class Register extends Message {
     private String username;
     private String password;
     private Vector<Byte> inputTemp;
-    private boolean doneDecoding = false;
 
     public Register(){
         super();

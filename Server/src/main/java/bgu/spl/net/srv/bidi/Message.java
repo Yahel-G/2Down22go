@@ -37,4 +37,8 @@ public abstract class Message {
         }
         return ret;
     }
+
+    protected int twoBytesToInt(Byte[] bytes){
+       return ((bytes[0] & 0xff) << 8) | (bytes[1] & 0xff);
+    }
 }
