@@ -13,4 +13,9 @@ public class Userlist extends Message {
     public void process(int connectionId, Connections<Message> connections){
 
     }
+
+    @Override
+    public void decodeByte(Byte nextByte) {
+        // do nothing
+    }
 }
