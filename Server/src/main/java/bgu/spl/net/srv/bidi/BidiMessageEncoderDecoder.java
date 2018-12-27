@@ -1,16 +1,17 @@
 package bgu.spl.net.srv.bidi;
 
 import bgu.spl.net.api.MessageEncoderDecoder;
+import bgu.spl.net.srv.bidi.Messages.MessageFactory;
 
 import java.nio.ByteBuffer;
 
 /**
  * Created by Yahel on 23/12/2018.
  */
-public class BidiMessageEncoderDecoder<Message> implements MessageEncoderDecoder<Message> {
+public class BidiMessageEncoderDecoder implements MessageEncoderDecoder<Message> {
 
-    private bgu.spl.net.srv.bidi.Message message = null;
-    private bgu.spl.net.srv.bidi.Message result = null;
+    private Message message = null;
+    private Message result = null;
     private final ByteBuffer opCode = ByteBuffer.allocate(2);
 
     // --------------------- DECODER --------------------- //
@@ -22,7 +23,7 @@ public class BidiMessageEncoderDecoder<Message> implements MessageEncoderDecoder
             if(!opCode.hasRemaining()){ // we'll pass here once opCode is full - once we've finsihed loading both bytes
                 byte[] toShort = opCode.array();
                 short OpcodeNumber = (short)((short)((toShort[0] & 0xff) << 8) + (short)(toShort[1] & 0xff)); // test in debug if can do without the inner castings
-                message = bgu.spl.net.srv.bidi.Messages.MessageFactory.create(OpcodeType.values()[OpcodeNumber]);
+                message = MessageFactory.create(OpcodeType.values()[OpcodeNumber]);
                 opCode.clear();
                 if (OpcodeNumber == 3 || OpcodeNumber == 7){
                     result = message;
