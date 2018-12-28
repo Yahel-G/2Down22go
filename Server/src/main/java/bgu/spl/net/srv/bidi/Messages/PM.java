@@ -37,6 +37,7 @@ public class PM extends Message {
             }else{
                 content = new String(toByteArray(temp));
                 temp.clear();
+                doneDecoding = true;
             }
         }
     }

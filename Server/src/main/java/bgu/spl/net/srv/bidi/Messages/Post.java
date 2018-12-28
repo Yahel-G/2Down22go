@@ -27,6 +27,7 @@ public class Post extends Message {
             tempContentVector.add(nextByte);
         }else{
             content = new String(toByteArray(tempContentVector));
+            doneDecoding = true;
         }
     }
 }

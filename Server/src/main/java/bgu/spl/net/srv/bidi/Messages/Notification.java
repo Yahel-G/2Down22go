@@ -37,6 +37,7 @@ public class Notification extends Message {
                 if(nextByte == 0){
                     content = new String(toByteArray(temp));
                     temp.clear();
+                    doneDecoding = true;
                 }else{
                     temp.add(nextByte);
                 }

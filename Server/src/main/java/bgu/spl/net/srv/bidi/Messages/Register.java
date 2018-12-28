@@ -40,7 +40,4 @@ public class Register extends Message {
     }
     public void process(int connectionId, Connections<Message> connections){ // todo: probably delete this
     }
-    public boolean isDoneDecoding(){
-        return doneDecoding;
-    }
 }

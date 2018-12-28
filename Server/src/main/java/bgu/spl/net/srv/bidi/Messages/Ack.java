@@ -45,11 +45,15 @@ public class Ack extends Message {
         }else if (opCode == -2){
             opCode = (short)((short)((tempByte & 0xff) << 8) + (short)(nextByte & 0xff)); // todo test in debug if can do without the inner castings
             tempByte = -1;
+            if (opCode != 4 && opCode != 7 && opCode != 8){
+                doneDecoding = true;
+            }
         }else if (opCode == 4 || opCode == 7){
             if (numRead == 2){
                 if(nextByte == 0){ // todo still need to check this works
                     userNameList.add(new String(toByteArray(tempUserVector)));
                     tempUserVector.clear();
+                    doneDecoding = true;
                 }else{
                     tempUserVector.add(nextByte);
                 }
@@ -84,6 +88,7 @@ public class Ack extends Message {
                 } else {
                     numFollowing = (short) ((short) ((tempByte & 0xff) << 8) + (short) (nextByte & 0xff)); // todo test in debug if can do without the inner castings
                     tempByte = -1;
+                    doneDecoding = true;
                 }
             }
 

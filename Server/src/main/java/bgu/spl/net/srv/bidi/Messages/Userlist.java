@@ -9,6 +9,7 @@ import bgu.spl.net.srv.bidi.Message;
 public class Userlist extends Message {
     public Userlist(){
         super();
+        doneDecoding = true;
     }
     public void process(int connectionId, Connections<Message> connections){
 

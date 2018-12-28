@@ -35,6 +35,7 @@ public class Follow extends Message {
     @Override
     public void decodeByte(Byte nextByte) {
         if (usersAmount > -1 && userNameList.size() == usersAmount){// if they sent the command with an empty list - this will fail - todo make sure they won't do that
+            doneDecoding = true;
             return; // assumes nextByte is a zero-byte
         }
         if (unfollow != -1){

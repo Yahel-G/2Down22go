@@ -25,6 +25,7 @@ public class Error extends Message {
         }else{
             opCode = (short)((short)((tempByte & 0xff) << 8) + (short)(nextByte & 0xff)); // todo test in debug if can do without the inner castings
             tempByte = -1;
+            doneDecoding = true;
         }
     }
 

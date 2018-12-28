@@ -26,6 +26,7 @@ public class Stat extends Message {
             temp.add(nextByte);
         }else{
             username = new String(toByteArray(temp));
+            doneDecoding = true;
         }
     }
 }
