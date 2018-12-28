@@ -2,6 +2,7 @@ package bgu.spl.net.srv.bidi.Messages;
 
 import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.bidi.Message;
+import bgu.spl.net.srv.bidi.OpcodeType;
 
 import java.util.Vector;
 
@@ -18,6 +19,8 @@ public class Notification extends Message {
     public Notification(){
         super();
         temp = new Vector<>();
+        opcodeType = OpcodeType.NOTIFICATION;
+
     }
     public void process(int connectionId, Connections<Message> connections){
 

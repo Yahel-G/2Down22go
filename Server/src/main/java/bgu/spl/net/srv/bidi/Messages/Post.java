@@ -2,6 +2,7 @@ package bgu.spl.net.srv.bidi.Messages;
 
 import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.bidi.Message;
+import bgu.spl.net.srv.bidi.OpcodeType;
 
 import java.util.Vector;
 
@@ -17,6 +18,8 @@ public class Post extends Message {
     public Post(){
         super();
         tempContentVector = new Vector<>();
+        opcodeType = OpcodeType.POST;
+
     }
     public void process(int connectionId, Connections<Message> connections){    }
 

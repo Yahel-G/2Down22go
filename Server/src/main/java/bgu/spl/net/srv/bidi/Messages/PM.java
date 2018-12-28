@@ -2,6 +2,7 @@ package bgu.spl.net.srv.bidi.Messages;
 
 import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.bidi.Message;
+import bgu.spl.net.srv.bidi.OpcodeType;
 
 import java.util.Vector;
 
@@ -17,6 +18,8 @@ public class PM extends Message {
 
     public PM(){
         super();
+        opcodeType = OpcodeType.PM;
+
     }
     public void process(int connectionId, Connections<Message> connections){
 

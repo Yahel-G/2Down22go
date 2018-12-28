@@ -2,6 +2,7 @@ package bgu.spl.net.srv.bidi.Messages;
 
 import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.bidi.Message;
+import bgu.spl.net.srv.bidi.OpcodeType;
 
 import java.util.Vector;
 
@@ -10,7 +11,7 @@ import java.util.Vector;
  */
 public class Follow extends Message {
     private int unfollow; // 0 indicates this is a follow message, 1 indicates this is an unfollow message, -1 indicates that this bit has not been processed yet.
-    private boolean alreadyReadFollowByte;
+ //   private boolean alreadyReadFollowByte;
     private Byte[] numOfUsers;
     private int usersAmount;
     private int numRead = 0;
@@ -26,7 +27,9 @@ public class Follow extends Message {
         userNameList = new Vector<>();
         tempUserVector = new Vector<>();
         usersAmount = -1;
- //       alreadyReadFollowByte = false;
+        opcodeType = OpcodeType.FOLLOW;
+
+        //       alreadyReadFollowByte = false;
     }
     public void process(int connectionId, Connections<Message> connections){
 
