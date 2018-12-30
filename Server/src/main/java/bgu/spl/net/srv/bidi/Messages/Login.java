@@ -15,6 +15,7 @@ public class Login extends Message {
     private String password;
     private Vector<Byte> inputTemp;
 
+
     public Login(){
         super();
         inputTemp = new Vector<>();
@@ -46,4 +47,13 @@ public class Login extends Message {
         }
     }
 
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

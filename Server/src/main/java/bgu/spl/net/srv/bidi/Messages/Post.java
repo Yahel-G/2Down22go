@@ -33,4 +33,9 @@ public class Post extends Message {
             doneDecoding = true;
         }
     }
+
+    public String getContent() {
+        return content;
+    }
+
 }

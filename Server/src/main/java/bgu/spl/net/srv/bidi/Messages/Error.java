@@ -9,15 +9,25 @@ import bgu.spl.net.srv.bidi.OpcodeType;
  */
 public class Error extends Message {
     private Byte tempByte;
-    private int opCode;
+    private OpcodeType opCode;
 
     public Error(){
         super();
         tempByte = -1;
-        opCode = -1; // for debugging
+        opCode = OpcodeType.NULL; // for debugging
         opcodeType = OpcodeType.ERROR;
 
     }
+
+    public Error(OpcodeType code){ // for BidiMessagingProtocolImpl
+        super();
+        tempByte = -1;
+        opcodeType = OpcodeType.ERROR;
+
+        opCode = code;
+
+    }
+
     public void process(int connectionId, Connections<Message> connections){
     }
 
@@ -26,11 +36,12 @@ public class Error extends Message {
         if (tempByte == -1){
             tempByte = nextByte;
         }else{
-            opCode = (short)((short)((tempByte & 0xff) << 8) + (short)(nextByte & 0xff)); // todo test in debug if can do without the inner castings
+            opCode = OpcodeType.values ()[((short)((tempByte & 0xff) << 8) + (short)(nextByte & 0xff))];
             tempByte = -1;
             doneDecoding = true;
         }
     }
+
 
 
 }

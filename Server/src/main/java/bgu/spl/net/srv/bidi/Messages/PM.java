@@ -44,4 +44,12 @@ public class PM extends Message {
             }
         }
     }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }

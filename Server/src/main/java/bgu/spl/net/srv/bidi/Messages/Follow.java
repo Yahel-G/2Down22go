@@ -64,4 +64,12 @@ public class Follow extends Message {
             unfollow = nextByte; // todo check if this works
         }
     }
+
+    public int getUnfollow() {
+        return unfollow;
+    }
+
+    public Vector<String> getUserNameList() {
+        return userNameList;
+    }
 }

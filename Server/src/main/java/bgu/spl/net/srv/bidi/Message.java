@@ -8,6 +8,7 @@ import java.util.Vector;
  * Created by Yahel on 23/12/2018.
  */
 public abstract class Message {
+    protected OpcodeType opcodeType = OpcodeType.NULL;
     protected boolean doneDecoding = false;
     private String[] theMsg;
 
@@ -40,5 +41,9 @@ public abstract class Message {
 
     protected int twoBytesToInt(Byte[] bytes){
        return ((bytes[0] & 0xff) << 8) | (bytes[1] & 0xff);
+    }
+
+    public OpcodeType getOpcodeType() {
+        return opcodeType;
     }
 }

@@ -32,4 +32,8 @@ public class Stat extends Message {
             doneDecoding = true;
         }
     }
+
+    public String getUsername() {
+        return username;
+    }
 }

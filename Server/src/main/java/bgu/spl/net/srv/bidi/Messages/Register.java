@@ -44,4 +44,12 @@ public class Register extends Message {
     }
     public void process(int connectionId, Connections<Message> connections){ // todo: probably delete this
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

@@ -12,7 +12,7 @@ import java.util.Vector;
 public class Ack extends Message {
 
 
-    private short opCode = -1;
+    private int opCode = -1; // todo: refactor this to be OpcodeType
     private Byte tempByte;
 
     //for follow or userlist messages ack:
@@ -27,6 +27,8 @@ public class Ack extends Message {
     private int numFollowers = -1;
     private  int numFollowing = -1;
 
+    //for userlist message ack:
+    private OpcodeType secondOpcodeType;
 
     public Ack(){
         super();
@@ -38,6 +40,38 @@ public class Ack extends Message {
         tempUserVector = new Vector<>();
         usersAmount = -1;
     }
+
+    public Ack(int code){ // for BidiMessageingProtocolImpl
+        super();
+        opcodeType = OpcodeType.ACK;
+
+        //for follow or userlist message ack:
+        numOfUsers = new Byte[2];
+        userNameList = new Vector<>();
+        tempUserVector = new Vector<>();
+        usersAmount = -1;
+
+        opCode = code;
+        }
+
+    // for BidiMessageingProtocolImpl (for un/follow messages  / userlist messages)
+    public Ack (int code, int numOfUsers, Vector<String> userNameList){
+        opCode = code;
+        usersAmount = numOfUsers;
+        this.userNameList = userNameList;
+    }
+
+    // for STAT ack
+    public Ack (int code, int numPosts, int numFollowers, int numFollowing){
+        opCode = code;
+        this.numPosts = numPosts;
+        this.numFollowers = numFollowers;
+        this.numFollowing = numFollowing;
+    }
+
+
+
+
     public void process(int connectionId, Connections<Message> connections){
     }
 
@@ -98,6 +132,7 @@ public class Ack extends Message {
 
         }
     }
+
 
 
 }

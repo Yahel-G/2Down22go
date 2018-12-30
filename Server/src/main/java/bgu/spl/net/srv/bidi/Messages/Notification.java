@@ -10,10 +10,14 @@ import java.util.Vector;
  * Created by Yahel on 23/12/2018.
  */
 public class Notification extends Message {
-    int publicMessage = -1; // 1 indicates public message, 0 indicates PM
+    private int publicMessage = -1; // 1 indicates public message, 0 indicates PM
     private String postingUser = "";
-    String content;
+    private String content;
     private Vector<Byte> temp;
+
+
+    // for post messages
+    private boolean publicPost;
 
 
     public Notification(){
@@ -22,6 +26,18 @@ public class Notification extends Message {
         opcodeType = OpcodeType.NOTIFICATION;
 
     }
+
+    //for bidimessagingprotocolimpl post message / PM
+    public Notification(boolean publicPost,String postingUser, String content){
+        super();
+        opcodeType = OpcodeType.NOTIFICATION;
+        this.publicPost = publicPost;
+        this.postingUser = postingUser;
+        this.content = content;
+    }
+
+
+
     public void process(int connectionId, Connections<Message> connections){
 
     }
@@ -51,5 +67,11 @@ public class Notification extends Message {
         }
     }
 
+    public String getContent() {
+        return content;
+    }
 
+    public boolean isPublicPost() {
+        return publicPost;
+    }
 }
