@@ -55,13 +55,17 @@ public class BidiMessagingProtocolImpl implements BidiMessagingProtocol<Message>
 
         }else if (type == OpcodeType.LOGIN){
             String username =((Login)message).getUsername();
-            if(!DB.getUserMap().containsKey(username)|| DB.getUserMap().get(username).getPassword() != ((Login)message).getPassword() || DB.getUserMap().get(username).isLoggedIn()){
+            if(!DB.getUserMap().containsKey(username)|| !(DB.getUserMap().get(username).getPassword().equals(((Login)message).getPassword())) || DB.getUserMap().get(username).isLoggedIn()){
                 connections.send(connectionId, new Error(type));
             }else{ // all ok todo: deal with pending messages!!!
                 theUser = DB.getUserMap().get(username);
                 theUser.logIn();
                 DB.getOnlineUsersMap().put(username, connectionId);
                 connections.send(connectionId, new Ack(2)); // todo: refactor these to "getOpcode" func from Message
+                for(Notification notific: theUser.getPendingMessagesQueue()){// taking care of pending messages
+                    connections.send(connectionId, notific);
+                    theUser.getPendingMessagesQueue().remove(notific);
+                }
             }
 
         }else if (type == OpcodeType.LOGOUT){
@@ -112,8 +116,13 @@ public class BidiMessagingProtocolImpl implements BidiMessagingProtocol<Message>
                     }
                 }
                 for (String user: usersToSendTo){
-                    int userConnectionId = DB.getOnlineUsersMap().get(user);
-                    connections.send(userConnectionId, new Notification(true, theUser.getUsername(), postMessage.getContent()));
+                    Integer userConnectionId = DB.getOnlineUsersMap().get(user);
+                    Notification notific = new Notification(true, theUser.getUsername(), postMessage.getContent());
+                    if(userConnectionId != null) { // todo does this work?
+                        connections.send(userConnectionId, notific);
+                    }else{ // the user is offline
+                        DB.getUserMap().get(user).getPendingMessagesQueue().add(notific);
+                    }
                 }
         }else if (type == OpcodeType.PM){
             PM PMMs = (PM)message;
@@ -121,8 +130,14 @@ public class BidiMessagingProtocolImpl implements BidiMessagingProtocol<Message>
             if(!DB.getUserMap().containsKey(targetUser)){
                 connections.send(connectionId, new Error(type));
             }else{
-                DB.getUserSentPMsMap().get(PMMs.getUsername()).add(PMMs);
-                connections.send(DB.getOnlineUsersMap().get(targetUser), new Notification(false, PMMs.getUsername(), PMMs.getContent()));
+                Integer userConnectionId = DB.getOnlineUsersMap().get(targetUser);
+                Notification notific = new Notification(false, PMMs.getUsername(), PMMs.getContent());
+                if(userConnectionId != null) { // todo does this work?
+                    connections.send(DB.getOnlineUsersMap().get(targetUser), notific);
+                }else{
+                    DB.getUserMap().get(targetUser).getPendingMessagesQueue().add(notific);
+                }
+                    DB.getUserSentPMsMap().get(PMMs.getUsername()).add(PMMs);
             }
 
         }else if (type == OpcodeType.USERLIST){

@@ -43,7 +43,7 @@ public abstract class BaseServer<T> implements Server<T> {
                         clientSock,
                         encdecFactory.get(),
                         protocolFactory.get());
-                connections.start();// make a constructor and give it an ID and the connectionHandler
+                connections = new ConnectionsImpl();// make a constructor and give it an ID and the connectionHandler
                 execute(handler);
             }
         } catch (IOException ex) {

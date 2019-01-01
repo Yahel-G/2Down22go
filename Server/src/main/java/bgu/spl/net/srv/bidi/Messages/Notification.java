@@ -43,7 +43,7 @@ public class Notification extends Message {
     }
 
     @Override
-    public void decodeByte(Byte nextByte) {
+    public void decodeByte(Byte nextByte) { // todo: delete all this maybe? because we won't receive from client
         if (publicMessage == 1 || publicMessage == 0){
             if (postingUser == ""){
                 if (nextByte == 0){

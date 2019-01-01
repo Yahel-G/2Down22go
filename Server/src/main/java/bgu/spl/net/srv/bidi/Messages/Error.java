@@ -33,7 +33,7 @@ public class Error extends Message {
     }
 
     @Override
-    public void decodeByte(Byte nextByte) {
+    public void decodeByte(Byte nextByte) {// todo: delete all this maybe? because we won't receive from client
         if (tempByte == -1){
             tempByte = nextByte;
         }else{

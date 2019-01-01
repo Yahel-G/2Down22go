@@ -77,7 +77,7 @@ public class Ack extends Message {
     }
 
     @Override
-    public void decodeByte(Byte nextByte) {
+    public void decodeByte(Byte nextByte) {// todo: delete all this maybe? because we won't receive from client
         if (opCode == -1){
             tempByte = nextByte;
             opCode = -2;

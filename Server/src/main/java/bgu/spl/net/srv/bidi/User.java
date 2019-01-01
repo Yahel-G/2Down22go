@@ -1,6 +1,9 @@
 package bgu.spl.net.srv.bidi;
 
+import bgu.spl.net.srv.bidi.Messages.Notification;
+
 import java.util.Vector;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by Yahel on 28/12/2018.
@@ -11,6 +14,7 @@ public class User {
     private boolean loggedIn;
     private Vector<String> followingNameList;
     private Vector<String> followersNameList;
+    private ConcurrentLinkedQueue<Notification> pendingMessagesQueue;
 
 
     public User(String username, String password) {
@@ -18,7 +22,7 @@ public class User {
         this.password = password;
         followingNameList = new Vector<>();
         followersNameList = new Vector<>();
-
+        pendingMessagesQueue = new ConcurrentLinkedQueue<>();
     }
 
     public String getUsername() {
@@ -48,5 +52,9 @@ public class User {
 
     public Vector<String> getFollowersNameList() {
         return followersNameList;
+    }
+
+    public ConcurrentLinkedQueue<Notification> getPendingMessagesQueue() {
+        return pendingMessagesQueue;
     }
 }
