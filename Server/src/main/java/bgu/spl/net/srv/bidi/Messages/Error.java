@@ -10,6 +10,7 @@ import bgu.spl.net.srv.bidi.OpcodeType;
 public class Error extends Message {
     private Byte tempByte;
     private OpcodeType opCode;
+    private OpcodeType opcodeType;
 
     public Error(){
         super();
@@ -42,6 +43,8 @@ public class Error extends Message {
         }
     }
 
-
-
+    @Override
+    public OpcodeType getOpcodeType() {
+        return opcodeType;
+    }
 }

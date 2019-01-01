@@ -43,7 +43,16 @@ public abstract class Message {
        return ((bytes[0] & 0xff) << 8) | (bytes[1] & 0xff);
     }
 
+
+
     public OpcodeType getOpcodeType() {
         return opcodeType;
+    }
+
+    protected Byte[] shortToByteArray(short code){
+        Byte[] ret = new Byte[2];
+        ret[0] = (byte)(code & 0xff);
+        ret[1] = (byte)((code >> 8) & 0xff);
+        return ret;
     }
 }

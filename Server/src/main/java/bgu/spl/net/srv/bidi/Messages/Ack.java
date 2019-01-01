@@ -23,9 +23,9 @@ public class Ack extends Message {
     private Vector<Byte> tempUserVector;
 
     //for STAT message ack:
-    private int numPosts = -1;
-    private int numFollowers = -1;
-    private  int numFollowing = -1;
+    private Byte[] numPosts = null;
+    private Byte[] numFollowers = null;
+    private  Byte[] numFollowing = null;
 
     //for userlist message ack:
     private OpcodeType secondOpcodeType;
@@ -51,6 +51,7 @@ public class Ack extends Message {
         tempUserVector = new Vector<>();
         usersAmount = -1;
 
+
         opCode = code;
         }
 
@@ -64,9 +65,9 @@ public class Ack extends Message {
     // for STAT ack
     public Ack (int code, int numPosts, int numFollowers, int numFollowing){
         opCode = code;
-        this.numPosts = numPosts;
-        this.numFollowers = numFollowers;
-        this.numFollowing = numFollowing;
+        this.numPosts = shortToByteArray((short)numPosts);
+        this.numFollowers = shortToByteArray((short)numFollowers);
+        this.numFollowing = shortToByteArray((short)numFollowing);
     }
 
 
@@ -106,25 +107,25 @@ public class Ack extends Message {
                 numRead = 1;
             }
         }else if (opCode == 8){
-            if (numPosts == -1){
+            if (numPosts == null){
                 if (tempByte == -1){
                     tempByte = nextByte;
                 }else{
-                    numPosts = (short)((short)((tempByte & 0xff) << 8) + (short)(nextByte & 0xff)); // todo test in debug if can do without the inner castings
+                    numPosts = shortToByteArray((short)((short)((tempByte & 0xff) << 8) + (short)(nextByte & 0xff))); // todo test in debug if can do without the inner castings
                     tempByte = -1;
                 }
-            }else if (numFollowers == -1) {
+            }else if (numFollowers == null) {
                 if (tempByte == -1) {
                     tempByte = nextByte;
                 } else {
-                    numFollowers = (short) ((short) ((tempByte & 0xff) << 8) + (short) (nextByte & 0xff)); // todo test in debug if can do without the inner castings
+                    numFollowers = shortToByteArray((short) ((short) ((tempByte & 0xff) << 8) + (short) (nextByte & 0xff))); // todo test in debug if can do without the inner castings
                     tempByte = -1;
                 }
-            }else if (numFollowing == -1) {
+            }else if (numFollowing == null) {
                 if (tempByte == -1) {
                     tempByte = nextByte;
                 } else {
-                    numFollowing = (short) ((short) ((tempByte & 0xff) << 8) + (short) (nextByte & 0xff)); // todo test in debug if can do without the inner castings
+                    numFollowing = shortToByteArray((short) ((short) ((tempByte & 0xff) << 8) + (short) (nextByte & 0xff))); // todo test in debug if can do without the inner castings
                     tempByte = -1;
                     doneDecoding = true;
                 }
@@ -133,6 +134,27 @@ public class Ack extends Message {
         }
     }
 
+    public OpcodeType getSecondOpcodeType() {
+        return secondOpcodeType;
+    }
 
+    public Byte[] getNumOfUsers() {
+        return numOfUsers;
+    }
 
+    public Byte[] getNumFollowers() {
+        return numFollowers;
+    }
+
+    public Byte[] getNumFollowing() {
+        return numFollowing;
+    }
+
+    public Vector<String> getUserNameList() {
+        return userNameList;
+    }
+
+    public Byte[] getNumPosts() {
+        return numPosts;
+    }
 }

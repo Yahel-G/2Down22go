@@ -74,4 +74,8 @@ public class Notification extends Message {
     public boolean isPublicPost() {
         return publicPost;
     }
+
+    public String getPostingUser() {
+        return postingUser;
+    }
 }
