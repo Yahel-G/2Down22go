@@ -18,18 +18,19 @@ public class BidiMessageEncoderDecoder implements MessageEncoderDecoder<Message>
     private Message result = null;
     private final ByteBuffer opCode = ByteBuffer.allocate(2);
 
-    // --------------------- DECODER --------------------- //
 
     @Override
     public Message decodeNextByte(byte nextByte) {
         if (message == null){   // not done decoding the opcode
             opCode.put(nextByte);
             if(!opCode.hasRemaining()){ // we'll pass here once opCode is full - once we've finsihed loading both bytes
-                byte[] toShort = opCode.array();
-                short OpcodeNumber = (short)((short)((toShort[0] & 0xff) << 8) + (short)(toShort[1] & 0xff)); // test in debug if can do without the inner castings
-                message = MessageFactory.create(OpcodeType.values()[OpcodeNumber]);
+               // byte[] toShort = opCode.array();
+             //   short OpcodeNumber =ByteBuffer.wrap(toShort).order(ByteOrder.LITTLE_ENDIAN).getShort(); //  (short)((short)((toShort[0] & 0xff) << 8) + (short)(toShort[1] & 0xff)); // test in debug if can do without the inner castings
+           //     String Opcodeeee = new String(toShort);
+                String code = new String(opCode.array());
+                message = MessageFactory.create(code);
                 opCode.clear();
-                if (OpcodeNumber == 3 || OpcodeNumber == 7){
+                if (code == "LOGOUT" || code == "USERLIST"){
                     result = message;
                     message = null;
                 }
