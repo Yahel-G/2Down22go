@@ -24,6 +24,10 @@ public class BidiMessagingProtocolImpl implements BidiMessagingProtocol<Message>
     private DataBase DB;
     private User theUser = null;
 
+    public BidiMessagingProtocolImpl(DataBase DB){
+        this.DB = DB;
+    }
+
     public void start(int connectionId, Connections<Message> connections){
         this.connectionId = connectionId;
         this.connections = (ConnectionsImpl)connections; // todo is this casting legit?
@@ -33,10 +37,8 @@ public class BidiMessagingProtocolImpl implements BidiMessagingProtocol<Message>
     }
 
 
+    @SuppressWarnings("unchecked") // todo remove maybe
     public void process(Message message){
-        if(!message.isDoneDecoding()){
-            return;
-        }
         OpcodeType type = message.getOpcodeType();
         if(type == OpcodeType.LOGOUT || type == OpcodeType.FOLLOW || type == OpcodeType.POST ||
                 type == OpcodeType.PM || type == OpcodeType.USERLIST || type == OpcodeType.STAT){
@@ -118,8 +120,10 @@ public class BidiMessagingProtocolImpl implements BidiMessagingProtocol<Message>
                 for (String user: usersToSendTo){
                     Integer userConnectionId = DB.getOnlineUsersMap().get(user);
                     Notification notific = new Notification(true, theUser.getUsername(), postMessage.getContent());
-                    if(userConnectionId != null) { // todo does this work?
-                        connections.send(userConnectionId, notific);
+                    if(/*userConnectionId != null*/DB.getUserMap().get(user).isLoggedIn()) {
+                        if(!connections.send(userConnectionId, notific)){
+                            DB.getUserMap().get(user).getPendingMessagesQueue().add(notific);
+                        }
                     }else{ // the user is offline
                         DB.getUserMap().get(user).getPendingMessagesQueue().add(notific);
                     }
@@ -132,8 +136,10 @@ public class BidiMessagingProtocolImpl implements BidiMessagingProtocol<Message>
             }else{
                 Integer userConnectionId = DB.getOnlineUsersMap().get(targetUser);
                 Notification notific = new Notification(false, PMMs.getUsername(), PMMs.getContent());
-                if(userConnectionId != null) { // todo does this work?
-                    connections.send(DB.getOnlineUsersMap().get(targetUser), notific);
+                if(/*userConnectionId != null*/DB.getUserMap().get(targetUser).isLoggedIn()) {
+                    if(!connections.send(DB.getOnlineUsersMap().get(targetUser), notific)){
+                        DB.getUserMap().get(targetUser).getPendingMessagesQueue().add(notific);
+                    }
                 }else{
                     DB.getUserMap().get(targetUser).getPendingMessagesQueue().add(notific);
                 }

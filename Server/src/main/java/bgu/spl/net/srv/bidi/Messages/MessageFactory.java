@@ -1,6 +1,7 @@
 package bgu.spl.net.srv.bidi.Messages;
 
 import bgu.spl.net.srv.bidi.Message;
+import bgu.spl.net.srv.bidi.OpcodeType;
 
 
 /**
@@ -11,28 +12,28 @@ public class MessageFactory {
 
     }
 
-    public static Message create(String type){
-        if (type == "REGISTER") {
+    public static Message create(OpcodeType type){
+        if (type == OpcodeType.REGISTER) {
             return new Register();
-        }else if (type == "LOGIN"){
+        }else if (type == OpcodeType.LOGIN){
             return new Login();
-        }else if (type == "LOGOUT"){
+        }else if (type == OpcodeType.LOGOUT){
             return new Logout();
-        }else if (type == "FOLLOW"){
+        }else if (type == OpcodeType.FOLLOW){
             return new Follow();
-        }else if (type == "POST"){
+        }else if (type == OpcodeType.POST){
             return new Post();
-        }else if (type == "PM"){
+        }else if (type == OpcodeType.PM){
             return new PM();
-        }else if (type == "USERLIST"){
+        }else if (type == OpcodeType.USERLIST){
             return new Userlist();
-        }else if (type == "STAT"){
+        }else if (type == OpcodeType.STAT){
             return new Stat();
-        }else if (type == "NOTIFICATION"){
+        }else if (type == OpcodeType.NOTIFICATION){
             return new Notification();
-        }else if (type == "ACK"){
+        }else if (type == OpcodeType.ACK){
             return new Ack();
-        }else if (type == "ERROR"){
+        }else if (type == OpcodeType.ERROR){
             return new Error();
         }else return null; // some error
     }
