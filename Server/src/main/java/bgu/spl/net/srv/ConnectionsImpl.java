@@ -8,12 +8,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Yahel on 22/12/2018.
  */
 public class ConnectionsImpl<T> implements Connections<T> {
-//todo: think if functions should be protected/private/public
+    private int id;
 
     private ConcurrentHashMap<Integer, bgu.spl.net.srv.bidi.ConnectionHandler<T>> handlersMap; // todo: concurrent?
 
     public ConnectionsImpl(){
         handlersMap = new ConcurrentHashMap<>();
+        id = 0;
     }
 
     public boolean send(int connectionId, T msg){
@@ -40,5 +41,10 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
     public ConcurrentHashMap<Integer, bgu.spl.net.srv.bidi.ConnectionHandler<T>> getHandlersMap() {
         return handlersMap;
+    }
+
+    public void addConnection(BlockingConnectionHandler handler){
+        handlersMap.put(id, (bgu.spl.net.srv.bidi.ConnectionHandler<T>) handler);
+        id++;
     }
 }

@@ -61,8 +61,10 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
     public void send(T msg) {
         byte[] encodedMessage = encdec.encode(msg);
         try {
-            out.write(encodedMessage);
-            out.flush();
+            if (msg != null){
+                out.write(encodedMessage);
+                out.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -44,8 +44,10 @@ public abstract class BaseServer<T> implements Server<T> {
                         encdecFactory.get(),
                         protocolFactory.get());
                 connections = new ConnectionsImpl();// make a constructor and give it an ID and the connectionHandler
+                connections.addConnection(handler);
                 execute(handler);
             }
+
         } catch (IOException ex) {
         }
 
